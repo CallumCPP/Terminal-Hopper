@@ -1,4 +1,4 @@
-#include "Player.h"
+#include "Player.hpp"
 
 Player::Player(Rectangle rect, Color color, bool shouldCollide){
     this->rect = rect;

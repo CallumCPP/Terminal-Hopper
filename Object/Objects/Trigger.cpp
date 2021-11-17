@@ -1,4 +1,4 @@
-#include "Trigger.h"
+#include "Trigger.hpp"
 
 Trigger::Trigger(Rectangle rect, Color color, std::function<void()> event, bool shouldCollide, bool shouldTick) {
     this->rect = rect;

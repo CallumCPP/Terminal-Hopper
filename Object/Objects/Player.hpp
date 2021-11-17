@@ -1,7 +1,7 @@
 #ifndef OBJECT_OBJECTS_PLAYER
 #define OBJECT_OBJECTS_PLAYER
 #include <vector>
-#include "../Object.h"
+#include "../Object.hpp"
 
 class Player : public Object {
 public:

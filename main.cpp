@@ -2,9 +2,9 @@
 #include "raymath.h"
 #define RAYGUI_IMPLEMENTATION
 #include "raygui.h"
-#include "Object/Object.h"
-#include "Object/Objects/Player.h"
-#include "Object/Objects/Trigger.h"
+#include "Object/Object.hpp"
+#include "Object/Objects/Player.hpp"
+#include "Object/Objects/Trigger.hpp"
 #include <vector>
 #include <string>
 

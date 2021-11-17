@@ -1,4 +1,4 @@
-#include "Object.h"
+#include "Object.hpp"
 
 Object::Object(Rectangle rect, Color color, bool shouldCollide, bool shouldTick){
     this->shouldCollide = shouldCollide;
