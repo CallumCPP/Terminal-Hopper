@@ -44,6 +44,7 @@ void Player::Update(std::vector<Object*> objects, float delta) {
         this->canJump = false;
     }
     else {
+        if (IsKeyDown(KEY_S) && above) this->rect.y += this->jumpSpeed*delta;
         if (jumped && !above) this->rect.y -= this->jumpSpeed*delta;
         this->canJump = true;
     }

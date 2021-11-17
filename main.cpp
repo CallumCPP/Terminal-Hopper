@@ -114,7 +114,8 @@ void ShowMenu(){
 
     DrawText("- Right/Left or D/A to move", 40, 40, 10, DARKGRAY);
     DrawText("- Space to jump", 40, 60, 10, DARKGRAY);
-    DrawText("- Mouse Wheel to Zoom in-out, R to reset zoom", 40, 80, 10, DARKGRAY);
+    DrawText("- S to unstick", 40, 80, 10, DARKGRAY);
+    DrawText("- Mouse Wheel to Zoom in-out, R to reset zoom", 40, 100, 10, DARKGRAY);
 }
 
 bool IsRectColliding(Rectangle rect1, Rectangle rect2){
