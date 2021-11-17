@@ -1,7 +1,7 @@
 #ifndef OBJECT_OBJECTS_TRIGGER
 #define OBJECT_OBJECTS_TRIGGER
 #include <functional>
-#include "../Object.h"
+#include "../Object.hpp"
 
 class Trigger : public Object {
 public:

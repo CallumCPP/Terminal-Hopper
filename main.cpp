@@ -35,9 +35,7 @@ int main(void) {
     ToggleFullscreen();
 
     LoadObjects();
-    Player player({ -20, -40, 40, 40 }, NewColor(64, 64, 64));
-    //player.jumpSpeed = -player.jumpSpeed;
-    //player.G = -player.G;
+    Player player({ -20, -40, 40, 40 }, PINK);
     currPlayer = &player;
     objects.push_back(&player);
     NewTrigger({ 100, 398, 100, 2}, NewColor(255, 255, 0), FlipGravity);
@@ -76,7 +74,10 @@ int main(void) {
         if (camera.zoom > 3.0f) camera.zoom = 3.0f;
         else if (camera.zoom < 0.25f) camera.zoom = 0.25f;
 
-        if (IsKeyPressed(KEY_R)) camera.zoom = 1.0f;
+        if (IsKeyPressed(KEY_R)) {
+            player = *(new Player({ -20, -40, 40, 40 }, PINK));
+            camera.zoom = 1.0f;
+        }
         
         UpdateCamera(&camera, &player, screenWidth, screenHeight);
         BeginDrawing();
