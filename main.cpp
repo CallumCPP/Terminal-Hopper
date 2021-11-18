@@ -6,6 +6,7 @@
 #include "Object/Objects/Player.hpp"
 #include "Object/Objects/Trigger.hpp"
 #include "Object/Objects/Coin.hpp"
+#include "Object/Objects/Portal.hpp"
 #include <vector>
 #include <string>
 
@@ -85,7 +86,7 @@ int main(void) {
             player.speed = 0;
             camera.zoom = 1.0f;
         }
-        
+
         UpdateCamera(&camera, &player, screenWidth, screenHeight);
         BeginDrawing();
             ClearBackground(BLACK);
@@ -94,11 +95,12 @@ int main(void) {
                 for (int i = 0; i < objects.size(); i++) {
                     if (i){
                         if (objects[i]->shapeID == 0) DrawRectangleRec(objects[i]->rect, objects[i]->color);
-                        else if (objects[i]->shapeID == 1) DrawEllipse(objects[i]->rect.x + objects[i]->rect.width/2, 
-                                                                    objects[i]->rect.y + objects[i]->rect.height/2,
-                                                                    objects[i]->rect.width/2,
-                                                                    objects[i]->rect.height/2,
-                                                                    objects[i]->color);
+                        else if (objects[i]->shapeID == 1) 
+                            DrawEllipse(objects[i]->rect.x + objects[i]->rect.width/2, 
+                                        objects[i]->rect.y + objects[i]->rect.height/2,
+                                        objects[i]->rect.width/2,
+                                        objects[i]->rect.height/2,
+                                        objects[i]->color);
                     }
                     DrawRectangleRec(objects[0]->rect, objects[0]->color);
                     if (objects[i]->Update(objects, deltaTime)) objects[i]->rect = { 0, -810, 0, 0};
@@ -125,6 +127,7 @@ void LoadObjects(){
     objects.push_back(new Object({ 300, 200, 400, 10}, GREEN, false));
     objects.push_back(new Object({ 650, 300, 100, 10}, GREEN, true));
     objects.push_back(new Object({ -30, 400, 10000, 10}, GREEN, true, false));
+    objects.push_back(new Portal({ 100, 200, 100, 10}, GREEN, {100, -400}, false));
     
     objects.push_back(new Coin({ 300, 150, 50, 50}, YELLOW));
     objects.push_back(new Coin({ 360, 150, 50, 50}, YELLOW));
