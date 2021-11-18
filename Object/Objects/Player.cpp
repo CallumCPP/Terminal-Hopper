@@ -1,14 +1,14 @@
 #include "Player.hpp"
 
-Player::Player(Rectangle rect, Color color, bool shouldCollide){
+Player::Player(Rectangle rect, Color color){
     this->rect = rect;
     this->originalColor = color;
     this->color = color;
-    this->shouldCollide = shouldCollide;
+    this->shouldCollide = true;
     this->shouldTick = false;
 }
 
-void Player::Update(std::vector<Object*> objects, float delta) {
+bool Player::Update(std::vector<Object*> objects, float delta) {
     if (this->rect.y > 800) { this->rect.x = 0; this->rect.y = -40; }
     bool jumped = false;
     if ((IsKeyDown(KEY_SPACE) || IsKeyDown(KEY_W)) && this->canJump) {
@@ -27,8 +27,8 @@ void Player::Update(std::vector<Object*> objects, float delta) {
             if (obj.shouldCollide && IsCollidingWith(obj) &&
                 obj.rect.y < rect->y + rect->height + this->speed*delta)
             {
-                if (obj.rect.y < rect->y + rect->height && G > 0) above = true;
-                else if (obj.rect.y > rect->y) above = true;
+                if (obj.rect.y + obj.rect.height < rect->y + rect->height && G > 0) above = true;
+                else if (obj.rect.y > rect->y && G < 0) above = true;
                 hitObstacle = 1;
                 this->speed = 0.0f;
             }
@@ -48,4 +48,5 @@ void Player::Update(std::vector<Object*> objects, float delta) {
         if (jumped && !above) this->rect.y -= this->jumpSpeed*delta;
         this->canJump = true;
     }
+    return false;
 }

@@ -1,11 +1,12 @@
 #include "Object.hpp"
 
-Object::Object(Rectangle rect, Color color, bool shouldCollide, bool shouldTick){
+Object::Object(Rectangle rect, Color color, bool shouldCollide, bool shouldTick, int shapeID){
     this->shouldCollide = shouldCollide;
     this->shouldTick = shouldTick;
     this->color = color;
     this->originalColor = color;
     this->rect = rect;
+    this->shapeID = shapeID;
 }
 
 bool Object::IsCollidingWith(Object object){

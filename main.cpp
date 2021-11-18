@@ -5,6 +5,7 @@
 #include "Object/Object.hpp"
 #include "Object/Objects/Player.hpp"
 #include "Object/Objects/Trigger.hpp"
+#include "Object/Objects/Coin.hpp"
 #include <vector>
 #include <string>
 
@@ -24,6 +25,11 @@ int screenWidth;
 int screenHeight;
 Player* currPlayer;
 
+enum ShapeID {
+    Rect,
+    Ellipse
+};
+
 bool ticked = false;
 double timeSinceTick = 1;
 float tickThreshold = 1;
@@ -34,12 +40,11 @@ int main(void) {
     SetExitKey(-1);
     ToggleFullscreen();
 
-    LoadObjects();
     Player player({ -20, -40, 40, 40 }, PINK);
     currPlayer = &player;
     objects.push_back(&player);
-    NewTrigger({ 100, 398, 100, 2}, NewColor(255, 255, 0), FlipGravity);
-    NewTrigger({ 100, -490, 100, 2}, NewColor(255, 255, 0), FlipGravity);
+    LoadObjects();
+    
 
     Camera2D camera = { 0 };
     camera.target = (Vector2){player.rect.x + 20, player.rect.y + 20};
@@ -51,7 +56,6 @@ int main(void) {
         float deltaTime = GetFrameTime();
         if (IsKeyDown(KEY_ESCAPE)) showMenu = true;
         if (!showMenu) {
-            player.Update(objects, deltaTime);
             timeSinceTick += deltaTime;
             for(int i = 0; i < objects.size(); i++){
                 if (timeSinceTick > tickThreshold && objects[i]->shouldTick){
@@ -84,13 +88,25 @@ int main(void) {
             ClearBackground(BLACK);
 
             BeginMode2D(camera);
-                for (int i = 0; i < objects.size(); i++) DrawRectangleRec(objects[i]->rect, objects[i]->color);
+                for (int i = 0; i < objects.size(); i++) {
+                    if (i){
+                        if (objects[i]->shapeID == 0) DrawRectangleRec(objects[i]->rect, objects[i]->color);
+                        else if (objects[i]->shapeID == 1) DrawEllipse(objects[i]->rect.x + objects[i]->rect.width/2, 
+                                                                    objects[i]->rect.y + objects[i]->rect.height/2,
+                                                                    objects[i]->rect.width/2,
+                                                                    objects[i]->rect.height/2,
+                                                                    objects[i]->color);
+                    }
+                    DrawRectangleRec(objects[0]->rect, objects[0]->color);
+                    if (objects[i]->Update(objects, deltaTime)) objects[i]->rect = { 0, -810, 0, 0};
+                }
+
                 for (int i = 0; i < triggers.size(); i++) {
                     DrawRectangleRec(triggers[i]->rect, triggers[i]->color);
                     if (triggers[i]->IsCollidingWith(*currPlayer)) triggers[i]->Event();
                 }
             EndMode2D();
-
+            DrawText(std::string("Coins: " + std::to_string(player.coinCount)).c_str(), 40, screenHeight - 40, 10, DARKGRAY);
             if (showMenu) ShowMenu();
         EndDrawing();
     }
@@ -106,6 +122,14 @@ void LoadObjects(){
     objects.push_back(new Object({ 300, 200, 400, 10}, GREEN, false));
     objects.push_back(new Object({ 650, 300, 100, 10}, GREEN, true));
     objects.push_back(new Object({ -30, 400, 10000, 10}, GREEN, true, false));
+    
+    objects.push_back(new Coin({ 300, 150, 50, 50}, YELLOW));
+    objects.push_back(new Coin({ 360, 150, 50, 50}, YELLOW));
+    objects.push_back(new Coin({ 420, 150, 50, 50}, YELLOW));
+    objects.push_back(new Coin({ 480, 150, 50, 50}, YELLOW));
+
+    NewTrigger({ 100, 398, 100, 2}, NewColor(255, 255, 0), FlipGravity);
+    NewTrigger({ 100, -490, 100, 2}, NewColor(255, 255, 0), FlipGravity);
 }
 
 void ShowMenu(){
