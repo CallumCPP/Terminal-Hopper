@@ -80,7 +80,8 @@ int main(void) {
         else if (camera.zoom < 0.25f) camera.zoom = 0.25f;
 
         if (IsKeyPressed(KEY_R)) {
-            player = *(new Player({ -20, -40, 40, 40 }, PINK));
+            player.rect = { -20, -40, 40, 40 };
+            player.speed = 0;
             camera.zoom = 1.0f;
         }
         
