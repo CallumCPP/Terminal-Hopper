@@ -9,6 +9,7 @@
 #include <vector>
 #include <string>
 
+typedef unsigned char u_char;
 std::vector<Object*> objects;
 std::vector<Trigger*> triggers;
 void NewTrigger(Rectangle rect, Color color, std::function<void()> event);
