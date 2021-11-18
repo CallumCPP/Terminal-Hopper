@@ -12,9 +12,9 @@
 typedef unsigned char u_char;
 std::vector<Object*> objects;
 std::vector<Trigger*> triggers;
+void GameLoop();
 void NewTrigger(Rectangle rect, Color color, std::function<void()> event);
 void UpdateCamera(Camera2D* camera, Player* player, int width, int height);
-bool IsRectColliding(Rectangle rect1, Rectangle rect2);
 Color NewColor(u_char r, u_char g, u_char b, u_char a = 255);
 void FlipGravity();
 void LoadObjects();
@@ -25,6 +25,7 @@ bool shouldClose;
 int screenWidth;
 int screenHeight;
 Player* currPlayer;
+Camera2D* camera; 
 
 enum ShapeID {
     Rect,
@@ -32,7 +33,7 @@ enum ShapeID {
 };
 
 bool ticked = false;
-double timeSinceTick = 1;
+float timeSinceTick = 0;
 float tickThreshold = 1;
 int main(void) {
     InitWindow(0, 0, "2D Platformer");
@@ -142,13 +143,6 @@ void ShowMenu(){
     DrawText("- Space to jump", 40, 60, 10, DARKGRAY);
     DrawText("- S to unstick", 40, 80, 10, DARKGRAY);
     DrawText("- Mouse Wheel to Zoom in-out, R to reset zoom", 40, 100, 10, DARKGRAY);
-}
-
-bool IsRectColliding(Rectangle rect1, Rectangle rect2){
-    return (rect1.x < rect2.x + rect2.width &&
-        rect1.x + rect1.width > rect2.x &&
-        rect1.y < rect2.y + rect2.height &&
-        rect1.height + rect1.y > rect2.y);
 }
 
 void UpdateCamera(Camera2D* camera, Player* player, int width, int height) {
